@@ -9,13 +9,28 @@ connectDB();
 
 // Initialisation de l'application Express
 const app = express();
+
+// Configuration de CORS
+const allowedOrigins = [
+  "http://localhost:5173", // Frontend local
+  "https://react-with-dagan-front.vercel.app", // Frontend déployé sur Vercel
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    credentials: true, // Autorise les cookies et autres credentials
   })
 );
+
+// Middleware pour parser les requêtes
 app.use(bodyParser.json());
 
 // Routes
@@ -24,12 +39,20 @@ const adminRoutes = require("./routes/adminRoutes");
 const articleRoutes = require("./routes/articleRoutes");
 
 app.use("/api/auth", authRoutes); // Routes pour l'authentification
-app.use("/api/auth", adminRoutes); // Routes pour l'administration
+app.use("/api/admin", adminRoutes); // Routes pour l'administration
 app.use("/api/articles", articleRoutes); // Routes pour les articles
 
 // Gestion des erreurs 404
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
+});
+
+// Middleware global pour gérer les erreurs
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    message: "Une erreur est survenue sur le serveur.",
+  });
 });
 
 // Démarrage du serveur
