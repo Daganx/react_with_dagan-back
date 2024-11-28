@@ -23,7 +23,7 @@ const upload = multer({
 
 // Créer un article avec image
 router.post("/", protect, upload.array("images", 5), async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, introduction, content, category } = req.body;
 
   try {
     let imageUrls = [];
@@ -80,6 +80,7 @@ router.post("/", protect, upload.array("images", 5), async (req, res) => {
 
     const newArticle = await Article.create({
       title,
+      introduction,
       content,
       category,
       images: imageUrls,
@@ -108,7 +109,7 @@ router.get("/", protect, async (req, res) => {
 // Mettre à jour un article
 router.put("/:id", protect, upload.array("images", 5), async (req, res) => {
   try {
-    const { title, content, category } = req.body;
+    const { title, introduction, content, category } = req.body;
     const existingImages = req.body.existingImages
       ? JSON.parse(req.body.existingImages)
       : [];
@@ -120,6 +121,7 @@ router.put("/:id", protect, upload.array("images", 5), async (req, res) => {
 
     // Mise à jour des champs de base
     article.title = title;
+    article.introduction = introduction;
     article.content = content;
     article.category = category;
 

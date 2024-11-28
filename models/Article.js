@@ -5,6 +5,10 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  introduction: {
+    type: String,
+    required: true,
+  },
   content: {
     type: String,
     required: true,
