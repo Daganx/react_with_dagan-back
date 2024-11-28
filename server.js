@@ -34,11 +34,9 @@ app.use(
 app.use(bodyParser.json());
 
 // Routes
-const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const articleRoutes = require("./routes/articleRoutes");
 
-app.use("/api/auth", authRoutes); // Routes pour l'authentification
 app.use("/api/admin", adminRoutes); // Routes pour l'administration
 app.use("/api/articles", articleRoutes); // Routes pour les articles
 
