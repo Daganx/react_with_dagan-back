@@ -23,6 +23,7 @@ const upload = multer({
 
 // Créer un article avec image
 router.post("/", protect, upload.array("images", 5), async (req, res) => {
+  console.log("Données reçues :", req.body); // Ajoutez cette ligne pour voir les données reçues
   const { title, introduction, content, category } = req.body;
 
   try {
