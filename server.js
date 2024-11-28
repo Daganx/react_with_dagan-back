@@ -13,7 +13,7 @@ const app = express();
 // Configuration de CORS
 const allowedOrigins = [
   "http://localhost:5173", // Frontend local
-  "https://react-with-dagan-front.vercel.app", // Frontend déployé sur Vercel
+  "https://reactwithdagan.vercel.app", // Frontend déployé sur Vercel
 ];
 
 app.use(
