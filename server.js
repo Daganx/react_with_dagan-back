@@ -36,9 +36,11 @@ app.use(bodyParser.json());
 // Routes
 const adminRoutes = require("./routes/adminRoutes");
 const articleRoutes = require("./routes/articleRoutes");
+const pingRoutes = require("./routes/pingRoutes");
 
 app.use("/api/admin", adminRoutes); // Routes pour l'administration
 app.use("/api/articles", articleRoutes); // Routes pour les articles
+app.use("/api", pingRoutes); // Routes pour ping hibernate
 
 // Gestion des erreurs 404
 app.use((req, res) => {
